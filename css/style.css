@@ -1,0 +1,356 @@
+/* 척척박사시스템에어컨 홈페이지 스타일 (topsystem.co.kr 레이아웃 참고) */
+@font-face{font-family:'GmarketSans';font-weight:500;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:700;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:300;font-style:normal;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff')}
+
+:root{
+  --fg:#222; --muted:#777; --light:#999; --line:#e9e9e9; --bg:#fff; --gray:#f6f6f4;
+  --navy:#1b2f6e; --blue:#2458c9; --sky:#4f8ff7; --teal:#2b8a9b; --taupe:#a9a496; --taupe-dark:#5f5a55; --pill:rgba(60,55,50,.78);
+  --head:'GmarketSans','Noto Sans KR',sans-serif; --body:'Noto Sans KR','Nanum Gothic','Malgun Gothic','맑은 고딕',sans-serif;
+  --w:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:var(--body);color:var(--fg);background:var(--bg);line-height:1.6;font-size:16px;word-break:keep-all;overflow-x:hidden}
+[hidden]{display:none!important}
+ul,ol{list-style:none} a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button{font-family:inherit}
+h1,h2,h3,h4{font-weight:700;line-height:1.3}
+.clearFix::after{content:'';display:block;clear:both}
+#skipBind{position:absolute;left:-9999px}
+.mcBox{max-width:var(--w);margin:0 auto;padding:0 20px}
+.mcArea{padding:110px 0}
+.mcArea.gray{background:var(--gray)}
+.mobileOnly{display:none}
+
+/* ---------- 등장 애니메이션 ---------- */
+.slideanim{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.slideanim.in{opacity:1;transform:none}
+
+/* ---------- 헤더 ---------- */
+#header{position:fixed;top:0;left:0;right:0;z-index:50}
+.headerFix{background:rgba(40,36,32,.55);backdrop-filter:blur(4px);transition:background .35s,box-shadow .35s;color:#fff}
+#header.fixed .headerFix{background:rgba(255,255,255,.97);color:var(--fg);box-shadow:0 2px 14px rgba(0,0,0,.08)}
+.naviArea{max-width:var(--w);margin:0 auto;padding:0 20px;height:100px;display:flex;align-items:center;gap:24px;transition:height .3s}
+#header.fixed .naviArea{height:76px}
+.ci a{display:flex;align-items:center;gap:10px}
+.logoMark{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#60a5fa 60%,#93c5fd);color:#fff;font-size:24px;box-shadow:0 4px 12px rgba(59,130,246,.35);flex-shrink:0}
+.logoText{display:flex;flex-direction:column;line-height:1.05}
+.logoText b{font-family:var(--head);font-weight:700;font-size:26px;letter-spacing:-.02em}
+.logoText em{font-style:normal;font-size:13px;font-weight:500;letter-spacing:.14em;opacity:.85}
+#header.fixed .logoText b{color:var(--navy)}
+.ciPartner{font-size:12px;letter-spacing:.02em;opacity:.85;border-left:1px solid rgba(255,255,255,.35);padding-left:16px;line-height:1.3}
+#header.fixed .ciPartner{border-color:var(--line);color:var(--muted)}
+.menuNavi{display:flex;margin-left:auto;gap:4px}
+.menuNavi a{display:block;padding:12px 24px;font-size:18px;font-weight:500;position:relative}
+.menuNavi a::after{content:'';position:absolute;left:24px;right:24px;bottom:4px;height:2px;background:currentColor;transform:scaleX(0);transition:transform .3s}
+.menuNavi a:hover::after{transform:scaleX(1)}
+#naviToggle{display:none;margin-left:auto;width:44px;height:44px;border:0;background:transparent;cursor:pointer;flex-direction:column;justify-content:center;gap:6px;align-items:center}
+#naviToggle span{display:block;width:26px;height:2px;background:currentColor;transition:.3s}
+body.naviOpen #naviToggle span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+body.naviOpen #naviToggle span:nth-child(2){opacity:0}
+body.naviOpen #naviToggle span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* ---------- 메인 비주얼 ---------- */
+#mainVisualArea{position:relative;height:min(92vh,860px);min-height:560px;overflow:hidden;background:#333}
+#mainVisualArea .slides .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.06);transition:opacity 1.4s ease,transform 7s linear}
+#mainVisualArea .slides .slide.on{opacity:1;transform:scale(1)}
+#mainVisualArea::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.25) 55%,rgba(0,0,0,.1) 100%);pointer-events:none}
+.mvLayerBox{position:absolute;inset:0;z-index:2;max-width:var(--w);margin:0 auto;padding:0 20px;display:flex;align-items:center}
+.mvLayerBox .textArea{color:#fff;max-width:720px}
+.mvLayerBox .textArea.anim{animation:fadeUp .9s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.slogan01{display:inline-block;background:rgba(40,36,32,.72);padding:12px 24px;font-size:19px;font-weight:300;margin-bottom:22px;letter-spacing:-.01em}
+.slogan01 strong{font-weight:700}
+.slogan02{font-family:var(--head);font-weight:700;font-size:70px;line-height:1.12;letter-spacing:-.03em;margin-bottom:22px;text-shadow:0 4px 24px rgba(0,0,0,.35)}
+.slogan03{font-size:20px;font-weight:300;line-height:1.7;margin-bottom:56px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.mvLayerBox .textArea a{display:inline-block;border:1px solid rgba(255,255,255,.75);padding:18px 60px;font-size:16px;font-weight:500;transition:.3s;backdrop-filter:blur(2px)}
+.mvLayerBox .textArea a:hover{background:#fff;color:var(--fg)}
+.heroDots{position:absolute;left:0;right:0;bottom:36px;z-index:3;display:flex;justify-content:center;gap:10px}
+.heroDots button{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.8);background:transparent;cursor:pointer;padding:0;transition:.3s}
+.heroDots button.on{background:#fff;transform:scale(1.15)}
+.scrollDown{position:absolute;right:28px;bottom:30px;z-index:3;color:#fff;font-size:11px;letter-spacing:.3em;writing-mode:vertical-rl;padding-bottom:50px}
+.scrollDown::after{content:'';position:absolute;left:50%;bottom:0;width:1px;height:40px;background:#fff;animation:line 1.6s infinite}
+@keyframes line{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- 섹션 제목 ---------- */
+.titleArea{text-align:center;margin-bottom:60px}
+.titleArea .engTitle{font-family:var(--head);font-size:15px;letter-spacing:.2em;color:var(--light);font-weight:500;margin-bottom:6px}
+.titleArea h2{font-family:var(--head);font-weight:300;font-size:56px;letter-spacing:-.02em;line-height:1.2}
+.titleArea h2.eng{font-size:64px;letter-spacing:-.01em}
+.titleArea h2 strong{font-weight:700}
+.titleArea .subject{color:var(--muted);font-size:17px;margin-top:10px;font-weight:300}
+.titleArea.white{color:#fff}
+.titleArea.white .engTitle{color:rgba(255,255,255,.8);font-weight:700}
+.titleArea.white .subject{color:rgba(255,255,255,.85)}
+.titleArea.left{text-align:left;margin-bottom:28px}
+.titleArea.left h2{font-size:38px;font-weight:700}
+.titleArea.left .engTitle{color:var(--fg);font-weight:700;letter-spacing:.1em}
+
+/* ---------- 회사소개 ---------- */
+.aboutBox{display:grid;grid-template-columns:5fr 7fr;gap:60px;align-items:center}
+.aboutImg{aspect-ratio:4/5;background-size:cover;background-position:center;border-radius:8px;box-shadow:0 20px 50px rgba(0,0,0,.14);position:relative}
+.aboutImg::after{content:'설치 실명제 · LG 전문 코드 시공';position:absolute;left:24px;bottom:24px;background:rgba(27,47,110,.9);color:#fff;padding:10px 18px;font-size:14px;font-weight:500;border-radius:4px}
+.aboutText{font-size:17px;color:#444;line-height:1.9;margin-bottom:34px;font-weight:300}
+.aboutPoints{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}
+.aboutPoints li{padding:22px 22px 20px;border:1px solid var(--line);border-radius:6px;background:#fff;transition:.3s;position:relative}
+.aboutPoints li:hover{border-color:var(--navy);box-shadow:0 12px 30px rgba(27,47,110,.1);transform:translateY(-3px)}
+.aboutPoints .num{font-family:var(--head);color:var(--sky);font-size:14px;font-weight:700;letter-spacing:.1em}
+.aboutPoints h4{font-size:18px;margin:6px 0 8px;letter-spacing:-.01em}
+.aboutPoints p{font-size:14px;color:var(--muted);line-height:1.7}
+.aboutMeta{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.aboutMeta strong{color:var(--fg);margin-right:6px}
+
+/* ---------- 시공사례 카테고리 ---------- */
+.serviceGroup{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.serviceGroup li.cat-corp{grid-column:1/-1}
+.serviceGroup .articleBox{position:relative;height:360px;background-size:cover;background-position:center;border-radius:6px;overflow:hidden;display:flex;align-items:flex-end;transition:.4s}
+.serviceGroup li.cat-corp .articleBox{height:250px}
+.serviceGroup .filterLayer{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.6) 100%);transition:.4s}
+.serviceGroup .articleBox:hover .filterLayer{background:linear-gradient(180deg,rgba(27,47,110,.3) 0%,rgba(27,47,110,.85) 100%)}
+.serviceGroup .infoArea{position:relative;z-index:1;color:#fff;padding:40px}
+.serviceGroup h3{font-family:var(--head);font-size:40px;font-weight:700;letter-spacing:-.02em;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.serviceGroup p{font-size:15px;line-height:1.6;font-weight:300;margin-bottom:26px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.serviceGroup .infoArea a{display:inline-block;background:var(--pill);padding:17px 36px;border-radius:999px;font-size:15px;font-weight:500;transition:.3s}
+.serviceGroup .infoArea a:hover{background:#fff;color:var(--fg)}
+
+/* ---------- 시공사례 목록 (카드뉴스) ---------- */
+.projectListArea{margin-top:80px;padding:0 0 0;text-align:center}
+.caseTabs{display:inline-flex;gap:6px;border-bottom:2px solid #ddd;margin-bottom:34px}
+.caseTabs button{border:0;background:transparent;font-size:17px;font-weight:500;color:var(--light);padding:10px 26px;cursor:pointer;position:relative;transition:.25s}
+.caseTabs button::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--navy);transform:scaleX(0);transition:.25s}
+.caseTabs button.on{color:var(--navy)}
+.caseTabs button.on::after{transform:scaleX(1)}
+.caseCarousel{position:relative;max-width:1560px;margin:0 auto;padding:0 56px}
+.caseTrack{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:10px 0 20px;scroll-behavior:smooth}
+.caseTrack::-webkit-scrollbar{display:none}
+.caseTrack .caseCard{flex:0 0 calc((100% - 80px)/5);scroll-snap-align:start}
+.caseTrack .empty{width:100%;padding:60px 0;color:var(--light)}
+.caseNav{position:absolute;top:150px;width:44px;height:44px;border-radius:50%;border:1px solid #ccc;background:#fff;cursor:pointer;transition:.25s;z-index:2}
+.caseNav::before{content:'';position:absolute;top:50%;left:50%;width:10px;height:10px;border-top:2px solid #555;border-left:2px solid #555;transform:translate(-30%,-50%) rotate(-45deg)}
+.caseNav.next::before{transform:translate(-70%,-50%) rotate(135deg)}
+.caseNav.prev{left:0} .caseNav.next{right:0}
+.caseNav:hover{background:var(--navy);border-color:var(--navy)} .caseNav:hover::before{border-color:#fff}
+.caseDots{display:flex;justify-content:center;gap:8px;margin-top:4px}
+.caseDots span{width:10px;height:10px;border-radius:2px;background:#d4d4d4}
+.caseDots span.on{background:#555}
+.caseGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:var(--w);margin:0 auto;padding:10px 20px 20px;text-align:left}
+.caseCard{background:#fff;border:1px solid var(--line);text-align:left;cursor:pointer;transition:.3s;overflow:hidden}
+.caseCard:hover{box-shadow:0 18px 40px rgba(0,0,0,.12);transform:translateY(-6px)}
+.caseCard .pic{position:relative;aspect-ratio:1/1;background-size:cover;background-position:center;overflow:hidden}
+.caseCard .capTop{position:absolute;top:0;left:0;right:0;padding:14px 10px 30px;background:linear-gradient(180deg,rgba(10,30,70,.85) 0%,rgba(10,30,70,0) 100%);color:#fff;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.caseCard .capTop .t1{display:block;font-family:var(--head);font-weight:700;font-size:20px;letter-spacing:-.02em;color:#9ff5c6;-webkit-text-stroke:.4px rgba(0,0,0,.35)}
+.caseCard .capTop .t2{display:block;font-size:13px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#d9f7e8}
+.caseCard .capBand{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(90deg,#1e6a7a,#2b8a9b);color:#fff;text-align:center;padding:6px 8px 7px;line-height:1.3}
+.caseCard .capBand strong{display:block;font-size:15px;letter-spacing:-.01em}
+.caseCard .capBand span{display:block;font-size:11px;opacity:.9}
+.caseCard .info{padding:16px 16px 18px}
+.caseCard .type{font-size:12px;color:var(--light);margin-bottom:4px}
+.caseCard .title{font-size:16px;font-weight:500;line-height:1.4;height:2.8em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.caseCard .sub{font-size:13px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.caseCard dl{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--light)}
+.moreBtn{display:inline-block;margin-top:40px;background:var(--taupe);color:#fff;border:0;padding:20px 48px;font-size:16px;font-weight:500;cursor:pointer;transition:.3s}
+.moreBtn:hover{background:var(--taupe-dark)}
+
+/* ---------- 사례 상세 ---------- */
+.caseModal{border:0;padding:0;width:min(960px,94vw);max-height:92vh;border-radius:8px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.caseModal::backdrop{background:rgba(0,0,0,.65)}
+.caseModal .mClose{position:absolute;top:10px;right:12px;z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;font-size:26px;cursor:pointer}
+#caseModalBody{display:grid;grid-template-columns:1.1fr 1fr;max-height:92vh}
+.caseModal .mPic{background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.caseModal .mPic img{width:100%;height:100%;object-fit:contain;max-height:92vh}
+.caseModal .mInfo{padding:44px 36px;overflow:auto}
+.caseModal .mInfo .type{font-size:13px;color:var(--sky);font-weight:700;letter-spacing:.05em;margin-bottom:8px}
+.caseModal .mInfo h3{font-size:26px;letter-spacing:-.02em;margin-bottom:12px}
+.caseModal .mInfo .sub{color:var(--muted);line-height:1.7;margin-bottom:22px}
+.caseModal dl div{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.caseModal dl dt{width:80px;color:var(--light);flex-shrink:0} .caseModal dl dd{font-weight:500}
+.caseModal .mBtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.btnDark,.btnGray,.btnBlack,.btnBlue,.btnLine{display:inline-block;padding:15px 26px;font-size:15px;font-weight:500;transition:.3s;text-align:center}
+.btnDark{background:#5c4d3f;color:#fff} .btnDark:hover{background:#3d3127}
+.btnGray{background:#8a847a;color:#fff} .btnGray:hover{background:#5f5a55}
+.btnBlack{background:#111;color:#fff} .btnBlack:hover{background:#333}
+.btnBlue{background:#8aa6e8;color:#fff} .btnBlue:hover{background:var(--blue)}
+.btnLine{border:1px solid #999;color:var(--fg)} .btnLine:hover{border-color:var(--fg);background:var(--fg);color:#fff}
+
+/* ---------- 견적 및 문의 ---------- */
+.mcArea.dark{background:#2d3139 url('../images/place_09.jpg') center/cover fixed;position:relative;color:#fff}
+.mcArea.dark::before{content:'';position:absolute;inset:0;background:rgba(30,34,44,.82);backdrop-filter:blur(3px)}
+.mcArea.dark .mcBox{position:relative}
+.contactBox{display:grid;grid-template-columns:7fr 5fr;background:#fff;color:var(--fg);box-shadow:0 30px 60px rgba(0,0,0,.3);border-radius:4px;overflow:hidden}
+.contactImg{position:relative;min-height:460px;background-size:cover;background-position:center;display:flex;align-items:flex-end}
+.contactImg::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.7) 100%)}
+.visualText{position:relative;color:#fff;padding:48px 56px}
+.pText01{font-size:17px;font-weight:700;margin-bottom:6px}
+.pText02{font-family:var(--head);font-weight:300;font-size:38px;line-height:1.25;letter-spacing:-.02em}
+.contactInfo{padding:60px 48px;position:relative;background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><path d="M0 400 L400 0" stroke="%23f1f1f1" stroke-width="60"/></svg>') right top/300px no-repeat}
+.iconBox{position:absolute;right:48px;top:52px;width:60px;height:60px;border-radius:6px;background:#bfb6a9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px}
+.contactInfo h3{font-size:30px;letter-spacing:-.02em;margin-bottom:20px}
+.contactInfo .guide{font-size:14px;color:#555;line-height:1.8;margin-bottom:22px}
+.contactSupport li{position:relative;padding-left:16px;font-size:15px;font-weight:700;margin-bottom:6px}
+.contactSupport li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--fg)}
+.bigTel{margin:28px 0 24px;font-family:var(--head);font-weight:700;font-size:38px;color:var(--navy);letter-spacing:-.01em;line-height:1.2}
+.bigTel small{display:block;font-family:var(--body);font-size:14px;color:var(--muted);font-weight:400;margin-top:4px}
+.linkArea{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- 설치비용 ---------- */
+.eventBox{position:relative;border-radius:6px;overflow:hidden;background:#333 center/cover;box-shadow:0 20px 50px rgba(0,0,0,.15);min-height:520px;display:flex;align-items:center}
+.eventBox::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.94) 48%,rgba(255,255,255,.35) 100%)}
+.eventInner{position:relative;padding:70px 80px;max-width:620px}
+.priceList{display:grid;gap:0;border-top:2px solid var(--fg)}
+.priceList li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 4px;border-bottom:1px solid #ddd;font-size:16px}
+.priceList .n{font-weight:500} .priceList .n small{display:block;font-size:12px;color:var(--light);font-weight:400}
+.priceList strong{font-family:var(--head);font-weight:700;font-size:20px;color:var(--navy);white-space:nowrap}
+.priceNote{font-size:13px;color:var(--muted);margin:16px 0 26px}
+
+/* ---------- 고객센터 ---------- */
+.mcArea.support{position:relative;background:#6b7fb0 center/cover;color:#fff;padding-bottom:120px}
+.mcArea.support::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(84,106,160,.9),rgba(40,52,96,.92))}
+.mcArea.support .mcBox{position:relative}
+.phoneBox{position:relative;width:fit-content;margin:-20px auto 44px;display:flex;align-items:stretch;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px)}
+.phoneBox>a{position:absolute;inset:0;z-index:1}
+.phoneTitle{padding:14px 20px;font-weight:700;border-right:1px solid rgba(255,255,255,.3);display:flex;align-items:center}
+.phoneNo{padding:10px 28px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:34px;letter-spacing:.02em}
+.supportBoxArea{display:grid;grid-template-columns:5fr 2.5fr 2.5fr;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+.supportBoxArea li{background:#fff;color:var(--fg);padding:44px 40px}
+.supportBoxArea li+li{border-left:1px solid var(--line)}
+.supportBoxArea li.blue{background:linear-gradient(135deg,#0b1a6b 0%,#1e3ab0 60%,#2a4fd8 100%);color:#fff}
+.supportBoxArea h4{font-size:19px;margin-bottom:14px;letter-spacing:-.01em}
+.supportBoxArea li.blue h4{font-size:27px}
+.supportBoxArea p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;min-height:3.4em}
+.supportBoxArea li.blue p{color:rgba(255,255,255,.9)}
+.supportBoxArea li:last-child{background:#faf9f5}
+.faqArea{margin-top:60px;background:#fff;color:var(--fg);padding:40px 44px}
+.faqArea h3{font-size:22px;margin-bottom:16px}
+.faqList details{border-top:1px solid var(--line)}
+.faqList details:last-child{border-bottom:1px solid var(--line)}
+.faqList summary{cursor:pointer;padding:16px 36px 16px 44px;font-weight:500;position:relative;list-style:none;font-size:16px}
+.faqList summary::-webkit-details-marker{display:none}
+.faqList summary::before{content:'Q';position:absolute;left:8px;top:14px;font-family:var(--head);font-weight:700;color:var(--sky);font-size:18px}
+.faqList summary::after{content:'+';position:absolute;right:10px;top:12px;font-size:22px;color:var(--light);transition:.3s}
+.faqList details[open] summary::after{transform:rotate(45deg)}
+.faqList p{padding:0 36px 18px 44px;font-size:14px;color:#555;line-height:1.8;position:relative}
+.faqList p::before{content:'A';position:absolute;left:8px;top:-4px;font-family:var(--head);font-weight:700;color:var(--light);font-size:18px}
+
+/* ---------- 푸터 ---------- */
+#bottom{background:#1c1f24 url('../images/place_10.jpg') center/cover;position:relative;color:#aaa;font-size:14px}
+#bottom::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,20,34,.97),rgba(18,26,44,.92))}
+.companyInfoArea{position:relative;max-width:var(--w);margin:0 auto;padding:50px 20px 40px}
+.bottomCIArea{display:flex;justify-content:space-between;align-items:center;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.12);flex-wrap:wrap;gap:16px}
+.bottomCI{display:flex;flex-direction:column;line-height:1.1;color:#fff}
+.bottomCI b{font-family:var(--head);font-size:24px}
+.bottomCI em{font-style:normal;font-size:12px;letter-spacing:.15em;opacity:.7}
+.linkGroup{display:flex;gap:26px}
+.linkGroup a{color:#fff;font-weight:500}
+.copyrightArea{padding-top:22px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
+.companyInfo span{margin-right:18px;line-height:1.9}
+.companyInfo strong{color:#ddd;font-weight:500}
+.companyInfo a:hover{color:#fff}
+.copyright{font-size:12px;color:#888}
+.nabyArea{position:relative;background:rgba(0,0,0,.35);border-top:1px solid rgba(255,255,255,.06)}
+.nabyBox{max-width:var(--w);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#777}
+.adminLink{background:rgba(255,255,255,.08);color:#aaa;padding:8px 18px;font-size:13px}
+.adminLink:hover{background:rgba(255,255,255,.18);color:#fff}
+
+/* ---------- 퀵 링크 / 맨 위로 ---------- */
+.quickLink{position:fixed;right:18px;bottom:110px;z-index:40;display:flex;flex-direction:column;gap:8px}
+.quickLink a{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;color:#fff;font-size:12px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:.3s}
+.quickLink a:hover{transform:scale(1.08)}
+.quickTel a{background:#1b2f6e} .quickSms a{background:#ff8a3d} .quickBlog a{background:#2db400}
+#goTop{position:fixed;right:18px;bottom:40px;z-index:40;width:56px;height:56px;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+#goTop i{width:10px;height:10px;border-top:2px solid #fff;border-left:2px solid #fff;transform:rotate(45deg);margin-top:4px}
+#goTop.show{opacity:1;pointer-events:auto}
+.previewBar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#f97316;color:#fff;padding:10px 16px;font-size:13px;display:flex;gap:16px;align-items:center;justify-content:center;font-weight:500}
+.previewBar a{text-decoration:underline}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1280px){
+  .caseTrack .caseCard{flex-basis:calc((100% - 60px)/4)}
+}
+@media (max-width:1024px){
+  .mcArea{padding:80px 0}
+  .menuNavi a{padding:12px 14px;font-size:16px}
+  .ciPartner{display:none}
+  .slogan02{font-size:52px}
+  .titleArea h2{font-size:44px} .titleArea h2.eng{font-size:48px}
+  .aboutBox{grid-template-columns:1fr;gap:36px}
+  .aboutImg{aspect-ratio:16/10}
+  .serviceGroup{grid-template-columns:1fr 1fr}
+  .serviceGroup .articleBox{height:300px}
+  .caseTrack .caseCard{flex-basis:calc((100% - 40px)/3)}
+  .caseGrid{grid-template-columns:repeat(3,1fr)}
+  .contactBox{grid-template-columns:1fr}
+  .contactImg{min-height:320px}
+  .supportBoxArea{grid-template-columns:1fr}
+  .supportBoxArea li+li{border-left:0;border-top:1px solid var(--line)}
+  .eventInner{padding:50px 40px}
+}
+@media (max-width:768px){
+  html{scroll-padding-top:70px}
+  .mobileOnly{display:block}
+  .naviArea{height:70px}
+  #header.fixed .naviArea{height:64px}
+  .logoMark{width:38px;height:38px;font-size:20px}
+  .logoText b{font-size:21px} .logoText em{font-size:11px}
+  #naviToggle{display:flex}
+  .menuNavi{position:fixed;top:0;right:0;bottom:0;width:min(320px,82vw);background:#fff;color:var(--fg);flex-direction:column;padding:90px 20px 30px;transform:translateX(100%);transition:transform .35s;box-shadow:-10px 0 40px rgba(0,0,0,.2);margin:0;gap:0}
+  body.naviOpen .menuNavi{transform:none}
+  body.naviOpen .headerFix{background:#fff;color:var(--fg)}
+  .menuNavi a{padding:16px 10px;border-bottom:1px solid var(--line);font-size:17px}
+  .menuNavi a::after{display:none}
+  .menuNavi .mobileOnly a{color:var(--navy);font-weight:700}
+  #mainVisualArea{height:min(88vh,720px);min-height:520px}
+  .mvLayerBox{align-items:flex-end;padding-bottom:90px}
+  .slogan01{font-size:14px;padding:9px 14px;margin-bottom:14px}
+  .slogan02{font-size:38px;margin-bottom:14px}
+  .slogan03{font-size:15px;margin-bottom:28px}
+  .mvLayerBox .textArea a{padding:14px 32px;font-size:14px}
+  .scrollDown{display:none}
+  .mcArea{padding:60px 0}
+  .titleArea{margin-bottom:34px}
+  .titleArea h2{font-size:34px} .titleArea h2.eng{font-size:34px}
+  .titleArea .subject{font-size:15px}
+  .aboutPoints{grid-template-columns:1fr}
+  .aboutText{font-size:15px}
+  .serviceGroup{grid-template-columns:1fr}
+  .serviceGroup .articleBox,.serviceGroup li.cat-corp .articleBox{height:240px}
+  .serviceGroup .infoArea{padding:24px}
+  .serviceGroup h3{font-size:30px}
+  .serviceGroup .infoArea a{padding:13px 26px;font-size:14px}
+  .projectListArea{margin-top:50px}
+  .caseTabs{width:100%;justify-content:center;flex-wrap:wrap}
+  .caseTabs button{padding:8px 14px;font-size:15px}
+  .caseCarousel{padding:0 14px}
+  .caseNav{display:none}
+  .caseTrack .caseCard{flex-basis:78%}
+  .caseGrid{grid-template-columns:1fr 1fr;gap:12px;padding:10px 14px}
+  .caseCard .capTop .t1{font-size:17px}
+  .moreBtn{padding:16px 32px;font-size:15px}
+  #caseModalBody{grid-template-columns:1fr;overflow:auto}
+  .caseModal .mPic img{max-height:50vh}
+  .caseModal .mInfo{padding:24px 20px}
+  .contactInfo{padding:36px 22px}
+  .iconBox{display:none}
+  .visualText{padding:28px 22px}
+  .pText02{font-size:26px}
+  .bigTel{font-size:30px}
+  .linkArea a{flex:1}
+  .eventBox{min-height:0}
+  .eventBox::before{background:rgba(255,255,255,.93)}
+  .eventInner{padding:36px 22px;max-width:none}
+  .titleArea.left h2{font-size:28px}
+  .priceList li{font-size:15px} .priceList strong{font-size:17px}
+  .phoneBox{margin-top:0;flex-direction:column;text-align:center}
+  .phoneTitle{border-right:0;border-bottom:1px solid rgba(255,255,255,.3);justify-content:center;padding:8px}
+  .phoneNo{font-size:26px;padding:10px 18px}
+  .supportBoxArea li{padding:30px 22px}
+  .faqArea{padding:24px 16px;margin-top:40px}
+  .faqList summary{font-size:15px}
+  .bottomCIArea{flex-direction:column;align-items:flex-start}
+  .linkGroup{gap:14px;flex-wrap:wrap}
+  .companyInfo p>span{display:block;margin:0}
+  .companyInfo br{display:none}
+  .copyrightArea{flex-direction:column;align-items:flex-start}
+  .quickLink{right:12px;bottom:96px;gap:6px}
+  .quickLink a{width:48px;height:48px;font-size:11px}
+  #goTop{right:12px;bottom:36px;width:48px;height:48px;font-size:10px}
+}

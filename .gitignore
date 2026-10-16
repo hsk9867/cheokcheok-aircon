@@ -1,0 +1,7 @@
+admin/auth.php
+admin/.lock.json
+data/config.js.tmp*
+data/config.json.tmp*
+images/uploads/*
+!images/uploads/.htaccess
+!images/uploads/.gitkeep

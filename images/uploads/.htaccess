@@ -1,0 +1,6 @@
+# 업로드 폴더에서는 스크립트를 실행하지 않습니다.
+php_flag engine off
+RemoveHandler .php .phtml .php3 .php4 .php5 .phps
+<FilesMatch "\.(php|phtml|php3|php4|php5|phps|cgi|pl)$">
+  Require all denied
+</FilesMatch>

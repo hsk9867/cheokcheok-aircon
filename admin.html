@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>관리자 · 척척박사시스템에어컨</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4f6;--sf:#fff;--sf2:#f9fafb;--line:#e5e7eb;--fg:#111827;--muted:#6b7280;--accent:#1b2f6e;--accent2:#2458c9;--warn:#dc2626;--ok:#16a34a}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--fg);font-size:15px;line-height:1.5;word-break:keep-all}
+a{color:inherit}
+.top{position:sticky;top:0;z-index:20;background:var(--accent);color:#fff;padding:0 18px;height:56px;display:flex;align-items:center;gap:12px}
+.top h1{font-size:17px;font-weight:700}
+.top .badge{font-size:12px;background:rgba(255,255,255,.18);padding:3px 10px;border-radius:999px}
+.top .badge.local{background:#f59e0b;color:#111}
+.top .sp{flex:1}
+.top a{font-size:13px;opacity:.9}
+.wrap{max-width:1040px;margin:0 auto;padding:18px 14px 120px}
+.desc{font-size:13px;color:var(--muted);margin-bottom:14px;background:var(--sf);border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+.gate{max-width:420px;margin:60px auto;background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:12px}
+.gate h2{font-size:18px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;position:sticky;top:56px;z-index:10;background:var(--bg);padding:8px 0 10px}
+.tabs button{border:1px solid var(--line);background:var(--sf);color:var(--muted);font:inherit;font-size:14px;font-weight:500;padding:8px 14px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.panel{display:grid;gap:14px}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px}
+.card>h3{font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.card>h3 small{font-size:12px;color:var(--muted);font-weight:400;flex-basis:100%}
+.f{display:grid;gap:4px}
+.f>label{font-size:12.5px;font-weight:500;color:var(--muted)}
+input[type=text],input[type=password],input[type=url],textarea,select{width:100%;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--sf);color:var(--fg)}
+input:focus,textarea:focus,select:focus{outline:2px solid #bfd0ff;border-color:var(--accent2)}
+textarea{min-height:70px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media (max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+.item{display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--sf2)}
+.item .ih{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:500;gap:8px}
+.item .ih .tools{display:flex;gap:4px}
+.item input,.item textarea,.item select{background:var(--sf)}
+.x,.mv{border:1px solid var(--line);background:var(--sf);color:var(--muted);font-size:13px;cursor:pointer;padding:3px 9px;border-radius:6px;font-family:inherit}
+.x:hover{color:var(--warn);border-color:var(--warn)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--sf);color:var(--fg);font:inherit;font-size:14px;font-weight:500;padding:9px 16px;border-radius:9px;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent2)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:default}
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--sf);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;box-shadow:0 -6px 20px rgba(0,0,0,.06)}
+.actions .st{font-size:12px;color:var(--muted);flex-basis:100%;text-align:center}
+.imgField{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start}
+.imgField .thumb{width:96px;height:96px;border-radius:8px;background:#e5e7eb center/cover;border:1px solid var(--line)}
+.imgField .ctl{display:grid;gap:6px}
+.imgField .row{display:flex;gap:6px;flex-wrap:wrap}
+.imgField input[type=file]{display:none}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:60;background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:500;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.bad{background:var(--warn)}
+.caseList{display:grid;gap:10px}
+.caseRow{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--sf2);cursor:pointer}
+.caseRow:hover{border-color:var(--accent2)}
+.caseRow .th{width:72px;height:72px;border-radius:8px;background:#ddd center/cover}
+.caseRow .ti{font-weight:500}.caseRow .ts{font-size:12.5px;color:var(--muted)}
+.caseRow .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;background:#e0e7ff;color:var(--accent);margin-right:6px}
+.caseRow .tools{display:flex;flex-direction:column;gap:4px}
+.editBox{border:2px solid var(--accent2);border-radius:12px;padding:14px;display:grid;gap:10px;background:#f8faff}
+.filterBar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.filterBar select{width:auto}
+.hint{font-size:12.5px;color:var(--muted)}
+.kv{display:flex;gap:8px;align-items:center;font-size:13px}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>관리자 · 척척박사시스템에어컨</h1>
+  <span class="badge" id="modeBadge" hidden></span>
+  <span class="sp"></span>
+  <a href="index.html" target="_blank">홈페이지 보기 ↗</a>
+</div>
+
+<div class="wrap">
+  <div class="desc" id="modeDesc">확인 중…</div>
+
+  <div class="gate" id="gate" hidden>
+    <div id="setup" hidden>
+      <h2>관리자 비밀번호 설정</h2>
+      <p class="hint">처음 접속입니다. 앞으로 사용할 관리자 비밀번호를 정해 주세요 (8자 이상).</p>
+      <div class="f"><label>비밀번호</label><input type="password" id="setupPw" autocomplete="new-password"></div>
+      <div class="f"><label>비밀번호 확인</label><input type="password" id="setupPw2" autocomplete="new-password"></div>
+      <button class="btn primary" id="setupBtn">설정하고 시작</button>
+    </div>
+    <div id="login" hidden>
+      <h2>관리자 로그인</h2>
+      <div class="f"><label>비밀번호</label><input type="password" id="loginPw" autocomplete="current-password"></div>
+      <button class="btn primary" id="loginBtn">로그인</button>
+    </div>
+  </div>
+
+  <div id="editor" hidden>
+    <div class="tabs" id="tabs"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+</div>
+
+<div class="actions" id="actions" hidden>
+  <button class="btn" id="actPreview">미리보기</button>
+  <button class="btn" id="actDownload" hidden>config.js 내려받기</button>
+  <button class="btn" id="actReset">기본값으로 되돌리기</button>
+  <button class="btn" id="actPw" hidden>비밀번호 변경</button>
+  <button class="btn" id="actLogout" hidden>로그아웃</button>
+  <button class="btn primary" id="actSave">저장</button>
+  <span class="st" id="saveState"></span>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="data/config.js"></script>
+<script>(function(){ try{ var s=document.createElement('script'); s.src='data/config.js?t='+Date.now(); s.async=false; document.write(s.outerHTML); }catch(e){} })();</script>
+<script src="js/site.js?v=20261016"></script>
+<script>
+(function(){
+'use strict';
+const {DEFAULTS, $, esc, isObj, clone, mergeConfig} = window.CB;
+let mode='local', st={}, draft=null, tab='basic', editingCase=null, caseFilter='all', dirty=false;
+try{ const h=location.hash.slice(1); if(/^(basic|hero|about|cases|prices|contact|support)$/.test(h)) tab=h; }catch(e){}
+
+const TABS=[['basic','기본 정보'],['hero','첫 화면'],['about','회사소개'],['cases','시공사례'],['prices','설치비용'],['contact','견적·문의'],['support','고객센터·FAQ']];
+
+function getPath(o,p){ return p.split('.').reduce((a,k)=>a==null?undefined:a[k],o); }
+function setPath(o,p,v){ const ks=p.split('.'); let a=o; for(let i=0;i<ks.length-1;i++){ if(a[ks[i]]==null) a[ks[i]]=/^\d+$/.test(ks[i+1])?[]:{}; a=a[ks[i]]; } a[ks[ks.length-1]]=v; }
+function toast(msg,bad){ const t=$('toast'); t.textContent=msg; t.className='toast'+(bad?' bad':''); t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>{t.hidden=true;},3500); }
+function toConfig(){ return {site:draft, savedAt:new Date().toISOString()}; }
+function markDirty(){ dirty=true; $('saveState').textContent='저장되지 않은 변경 사항이 있습니다.'; if(mode==='local'){ try{ localStorage.setItem('cb_cfg_draft', JSON.stringify(toConfig())); }catch(e){} } }
+
+async function api(action,data,form){
+  const opt={method:(data||form)?'POST':'GET', credentials:'same-origin', headers:{'X-Requested-With':'CB'}};
+  if(form){ opt.body=form; } else if(data){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(data); }
+  const r=await fetch('admin/api.php?action='+action+'&_='+Date.now(), opt);
+  const t=await r.text(); return JSON.parse(t);
+}
+
+/* ---------- 시작 ---------- */
+async function init(){
+  try{ st=await api('status'); if(st&&st.server) mode='server'; }catch(e){ mode='local'; }
+  const badge=$('modeBadge'); badge.hidden=false;
+  if(mode==='server'){
+    badge.textContent='서버 저장';
+    $('modeDesc').textContent='저장을 누르면 홈페이지에 바로 반영됩니다. 시공사례 사진은 서버의 images/uploads 폴더에 올라갑니다.';
+    $('actPw').hidden=false; $('actLogout').hidden=false;
+    if(!st.hasPassword){ $('gate').hidden=false; $('setup').hidden=false; }
+    else if(!st.loggedIn){ $('gate').hidden=false; $('login').hidden=false; }
+    else await openServer();
+  }else{
+    badge.textContent='로컬 모드'; badge.className='badge local';
+    $('modeDesc').innerHTML='이 주소에는 저장 서버(PHP)가 없어 수정 내용이 <b>이 브라우저에만</b> 보관됩니다. 다 고친 뒤 <b>"config.js 내려받기"</b>로 받은 파일을 프로젝트의 <code>data/config.js</code> 에 넣고 배포하면 반영됩니다. 사진은 파일 안에 함께 들어갑니다. PHP 호스팅(카페24 등)에 올리면 이 화면에서 바로 저장됩니다.';
+    $('actDownload').hidden=false;
+    let d=null; try{ d=JSON.parse(localStorage.getItem('cb_cfg_draft')||'null'); }catch(e){}
+    draft=mergeConfig(d||window.CB.RAW);
+    openEditor();
+  }
+}
+async function openServer(){
+  try{ const r=await api('load'); if(!r.ok){ if(r.error==='auth'){ $('gate').hidden=false; $('login').hidden=false; return; } throw new Error(r.error); }
+    draft=mergeConfig(r.config); if(r.writable===false) toast('data 폴더에 쓰기 권한이 없어 저장이 실패할 수 있습니다. FTP에서 data 폴더 권한을 707로 바꿔 주세요.', true);
+    openEditor();
+  }catch(e){ toast('설정을 불러오지 못했습니다: '+e.message, true); }
+}
+function openEditor(){ $('gate').hidden=true; $('editor').hidden=false; $('actions').hidden=false; renderTabs(); render(); }
+
+$('setupBtn').addEventListener('click', async ()=>{ const a=$('setupPw').value, b=$('setupPw2').value; if(a.length<8){ toast('8자 이상이어야 합니다.',true); return; } if(a!==b){ toast('비밀번호가 서로 다릅니다.',true); return; }
+  try{ const r=await api('setup',{password:a}); if(r.ok){ $('setup').hidden=true; await openServer(); } else toast('설정 실패: '+(r.message||r.error),true); }catch(e){ toast(e.message,true); } });
+$('loginBtn').addEventListener('click', doLogin); $('loginPw').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+async function doLogin(){ try{ const r=await api('login',{password:$('loginPw').value}); if(r.ok){ $('login').hidden=true; await openServer(); } else toast(r.error==='locked'?'틀린 횟수가 많아 15분간 잠겼습니다.':'비밀번호가 틀렸습니다.',true); }catch(e){ toast(e.message,true); } }
+$('actLogout').addEventListener('click', async ()=>{ await api('logout'); location.reload(); });
+$('actPw').addEventListener('click', async ()=>{ const cur=prompt('현재 비밀번호'); if(cur==null) return; const nw=prompt('새 비밀번호 (8자 이상)'); if(nw==null) return;
+  const r=await api('password',{current:cur,password:nw}); toast(r.ok?'비밀번호를 바꿨습니다.':'실패: '+(r.message||r.error), !r.ok); });
+
+/* ---------- 탭 ---------- */
+function renderTabs(){ $('tabs').innerHTML=TABS.map(([k,n])=>`<button type="button" role="tab" aria-selected="${k===tab}" data-tab="${k}">${n}</button>`).join('');
+  $('tabs').onclick=e=>{ const b=e.target.closest('[data-tab]'); if(!b) return; tab=b.dataset.tab; location.hash=tab; renderTabs(); render(); }; }
+
+/* ---------- 입력 도우미 ---------- */
+const inp=(label,path,opt={})=>{ const v=getPath(draft,path); const id='f_'+path.replace(/\W/g,'_');
+  if(opt.area) return `<div class="f"><label for="${id}">${label}</label><textarea id="${id}" data-path="${path}" ${opt.rows?`style="min-height:${opt.rows*24}px"`:''}>${esc(v)}</textarea>${opt.hint?`<span class="hint">${opt.hint}</span>`:''}</div>`;
+  return `<div class="f"><label for="${id}">${label}</label><input type="text" id="${id}" data-path="${path}" value="${esc(v)}" ${opt.ph?`placeholder="${esc(opt.ph)}"`:''}>${opt.hint?`<span class="hint">${opt.hint}</span>`:''}</div>`; };
+const img=(label,path,hint)=>{ const v=getPath(draft,path)||''; const id='f_'+path.replace(/\W/g,'_');
+  return `<div class="f"><label>${label}</label><div class="imgField"><div class="thumb" style="background-image:url('${esc(v)}')" id="${id}_th"></div>
+    <div class="ctl"><input type="text" data-path="${path}" id="${id}" value="${v.startsWith('data:')?'(업로드한 사진)':esc(v)}" placeholder="images/..." ${v.startsWith('data:')?'readonly':''}>
+    <div class="row"><label class="btn sm" for="${id}_file">사진 올리기</label><input type="file" id="${id}_file" accept="image/*" data-imgpath="${path}"><button type="button" class="btn sm" data-imgclear="${path}">지우기</button></div>
+    ${hint?`<span class="hint">${hint}</span>`:''}</div></div></div>`; };
+const listTools=(path,i,n)=>`<div class="tools"><button type="button" class="mv" data-move="${path}|${i}|-1" ${i===0?'disabled':''}>▲</button><button type="button" class="mv" data-move="${path}|${i}|1" ${i===n-1?'disabled':''}>▼</button><button type="button" class="x" data-del="${path}|${i}">삭제</button></div>`;
+
+/* ---------- 탭별 화면 ---------- */
+function render(){
+  const d=draft; let h='';
+  if(tab==='basic'){
+    h+=`<div class="card"><h3>상호 · 슬로건</h3><div class="g2">${inp('상호 (전체)','brand.name')}${inp('로고 큰 글씨','brand.short')}${inp('로고 작은 글씨','brand.sub')}${inp('로고 옆 한 줄 소개','brand.tagline')}</div></div>`;
+    h+=`<div class="card"><h3>연락처 <small>전화번호는 숫자와 - 만 적어 주세요. 홈페이지의 전화 버튼·문자 버튼에 그대로 쓰입니다.</small></h3><div class="g2">${inp('대표 휴대폰 (상담·문자)','contact.mobile')}${inp('사무실 전화','contact.tel')}${inp('네이버 스마트콜','contact.smartcall')}${inp('이메일','contact.email')}${inp('영업시간','contact.hours')}${inp('주소','contact.address')}${inp('네이버 블로그 주소','contact.blog')}${inp('네이버 플레이스 주소','contact.place')}${inp('카카오톡 채널 주소 (있으면)','contact.kakao',{ph:'https://pf.kakao.com/...'})}</div></div>`;
+    h+=`<div class="card"><h3>사업자 정보 <small>비워 두면 홈페이지 하단에 표시되지 않습니다.</small></h3><div class="g3">${inp('대표자','company.ceo')}${inp('사업자등록번호','company.bizNo')}${inp('시공 지역 (회사소개에 표시)','company.areas')}</div>${inp('하단 저작권 문구','footer.copyright')}</div>`;
+  }
+  if(tab==='hero'){
+    h+=`<div class="card"><h3>첫 화면 슬라이드 <small>6초마다 자동으로 넘어갑니다. 큰 제목·라벨에는 &lt;strong&gt;굵게&lt;/strong&gt;, &lt;br&gt;줄바꿈을 쓸 수 있습니다. 사진은 가로로 넓은 사진이 좋습니다.</small><button type="button" class="btn sm" data-add="hero.slides">+ 슬라이드 추가</button></h3>
+      ${d.hero.slides.map((s,i)=>`<div class="item"><div class="ih"><span>슬라이드 ${i+1}</span>${listTools('hero.slides',i,d.hero.slides.length)}</div>
+        ${img('배경 사진',`hero.slides.${i}.image`)}${inp('상단 라벨',`hero.slides.${i}.label`)}${inp('큰 제목',`hero.slides.${i}.title`)}${inp('설명',`hero.slides.${i}.text`,{area:true})}
+        <div class="g2">${inp('버튼 글씨 (비우면 숨김)',`hero.slides.${i}.btn`)}${inp('버튼 링크',`hero.slides.${i}.link`,{hint:'#about 회사소개 · #cases 시공사례 · #prices 설치비용 · #contact 견적 · #support 고객센터'})}</div></div>`).join('')}</div>`;
+  }
+  if(tab==='about'){
+    h+=`<div class="card"><h3>회사소개</h3><div class="g3">${inp('영문 소제목','about.en')}${inp('제목','about.title')}${inp('부제','about.subject')}</div>${inp('소개 글','about.text',{area:true,rows:5})}${img('대표 사진','about.image')}</div>`;
+    h+=`<div class="card"><h3>강점 포인트 <button type="button" class="btn sm" data-add="about.points">+ 추가</button></h3>${d.about.points.map((p,i)=>`<div class="item"><div class="ih"><span>포인트 ${i+1}</span>${listTools('about.points',i,d.about.points.length)}</div>${inp('제목',`about.points.${i}.title`)}${inp('설명',`about.points.${i}.text`,{area:true})}</div>`).join('')}</div>`;
+  }
+  if(tab==='cases'){
+    const cats=d.categories;
+    h+=`<div class="card"><h3>시공사례 섹션 문구</h3><div class="g2">${inp('영문 제목','casesSec.en')}${inp('부제','casesSec.subject')}${inp('"더 보기" 버튼 글씨','casesSec.moreBtn')}${inp('카드 하단 띠 문구 (지역)','casesSec.cardBand')}</div></div>`;
+    h+=`<div class="card"><h3>분류 (가정용 · 사업장 · 기업) <small>큰 카드 3개의 제목·설명·사진입니다. 분류를 지우면 그 분류의 사례는 "전체"에서만 보입니다.</small><button type="button" class="btn sm" data-add="categories">+ 분류 추가</button></h3>
+      ${cats.map((c,i)=>`<div class="item"><div class="ih"><span>분류 ${i+1} · 키 <code>${esc(c.key)}</code></span>${listTools('categories',i,cats.length)}</div><div class="g2">${inp('이름',`categories.${i}.name`)}${inp('키 (영문, 사례 분류에 사용)',`categories.${i}.key`)}</div>${inp('설명',`categories.${i}.text`,{area:true})}${img('대표 사진',`categories.${i}.image`)}</div>`).join('')}</div>`;
+    const list=d.cases.map((c,i)=>({c,i})).filter(x=>caseFilter==='all'||x.c.cat===caseFilter);
+    h+=`<div class="card"><h3>시공사례 목록 <small>등록한 순서대로 홈페이지에 보입니다. 새 사례는 맨 앞에 추가됩니다. 사례를 누르면 수정할 수 있습니다.</small>
+      <div class="filterBar"><select id="caseFilter"><option value="all">전체 (${d.cases.length})</option>${cats.map(c=>`<option value="${esc(c.key)}" ${caseFilter===c.key?'selected':''}>${esc(c.name)} (${d.cases.filter(x=>x.cat===c.key).length})</option>`).join('')}</select><button type="button" class="btn sm primary" id="caseAdd">+ 새 시공사례 등록</button></div></h3>
+      <div id="caseEditor"></div>
+      <div class="caseList">${list.map(({c,i})=>`<div class="caseRow" data-edit="${i}"><div class="th" style="background-image:url('${esc(c.image)}')"></div><div><div class="ti"><span class="tag">${esc((cats.find(k=>k.key===c.cat)||{}).name||c.cat)}</span>${esc(c.title)}</div><div class="ts">${esc(c.area||'')} · ${esc(c.sub||'')}${c.date?' · '+esc(c.date):''}</div></div>${listTools('cases',i,d.cases.length)}</div>`).join('')||'<p class="hint">등록된 사례가 없습니다.</p>'}</div></div>`;
+  }
+  if(tab==='prices'){
+    h+=`<div class="card"><h3>설치비용 안내</h3><div class="g2">${inp('영문 소제목','prices.en')}${inp('제목','prices.title')}</div>${inp('부제','prices.subject',{area:true})}${inp('하단 안내 문구','prices.note')}<div class="g2">${inp('버튼 글씨','prices.btn')}</div>${img('배경 사진','prices.image')}</div>`;
+    h+=`<div class="card"><h3>가격 항목 <button type="button" class="btn sm" data-add="prices.items">+ 항목 추가</button></h3>${d.prices.items.map((p,i)=>`<div class="item"><div class="ih"><span>항목 ${i+1}</span>${listTools('prices.items',i,d.prices.items.length)}</div><div class="g3">${inp('항목명',`prices.items.${i}.name`)}${inp('가격',`prices.items.${i}.price`)}${inp('설명 (작은 글씨)',`prices.items.${i}.desc`)}</div></div>`).join('')}</div>`;
+  }
+  if(tab==='contact'){
+    h+=`<div class="card"><h3>견적 및 문의</h3><div class="g2">${inp('영문 소제목','contactSec.en')}${inp('제목','contactSec.title')}</div>${img('왼쪽 사진','contactSec.image')}<div class="g2">${inp('사진 위 작은 글씨','contactSec.imgText1')}${inp('사진 위 큰 글씨','contactSec.imgText2',{area:true})}</div>${inp('오른쪽 상자 제목','contactSec.boxTitle')}${inp('안내 글','contactSec.guide',{area:true})}<div class="g2">${inp('버튼 1 (전화)','contactSec.btn1')}${inp('버튼 2 (문자)','contactSec.btn2')}</div></div>`;
+    h+=`<div class="card"><h3>안내 포인트 <button type="button" class="btn sm" data-add="contactSec.points">+ 추가</button></h3>${d.contactSec.points.map((p,i)=>`<div class="item"><div class="ih"><span>포인트 ${i+1}</span>${listTools('contactSec.points',i,d.contactSec.points.length)}</div>${inp('내용',`contactSec.points.${i}`)}</div>`).join('')}</div>`;
+  }
+  if(tab==='support'){
+    h+=`<div class="card"><h3>고객센터</h3><div class="g3">${inp('영문 소제목','support.en')}${inp('제목','support.title')}${inp('부제','support.subject')}</div>${img('배경 사진','support.image')}
+      <div class="item"><div class="ih">파란 상자 (견적문의)</div>${inp('제목','support.box1.title')}${inp('설명','support.box1.text',{area:true})}${inp('버튼','support.box1.btn')}</div>
+      <div class="item"><div class="ih">새로운 소식 (블로그 링크)</div>${inp('제목','support.box2.title')}${inp('설명','support.box2.text',{area:true})}${inp('버튼','support.box2.btn')}</div>
+      <div class="item"><div class="ih">자주하는 질문</div>${inp('제목','support.box3.title')}${inp('설명','support.box3.text',{area:true})}${inp('버튼','support.box3.btn')}</div></div>`;
+    h+=`<div class="card"><h3>자주하는 질문 (FAQ) <button type="button" class="btn sm" data-add="support.faq">+ 질문 추가</button></h3>${d.support.faq.map((f,i)=>`<div class="item"><div class="ih"><span>Q${i+1}</span>${listTools('support.faq',i,d.support.faq.length)}</div>${inp('질문',`support.faq.${i}.q`)}${inp('답변',`support.faq.${i}.a`,{area:true})}</div>`).join('')}</div>`;
+  }
+  $('panel').innerHTML=h;
+  if(tab==='cases'){ $('caseFilter').onchange=e=>{ caseFilter=e.target.value; render(); }; $('caseAdd').onclick=()=>{ const c={id:'c'+Date.now().toString(36), cat:(draft.categories[0]||{}).key||'home', area:'', title:'', sub:'', brand:'LG', units:'', date:new Date().toISOString().slice(0,7), image:'', link:''}; draft.cases.unshift(c); editingCase=0; markDirty(); render(); };
+    if(editingCase!=null && draft.cases[editingCase]) renderCaseEditor(); }
+}
+function renderCaseEditor(){
+  const i=editingCase, c=draft.cases[i], cats=draft.categories;
+  $('caseEditor').innerHTML=`<div class="editBox"><div class="ih" style="display:flex;justify-content:space-between;font-weight:700">시공사례 ${c.title?'수정':'등록'}<button type="button" class="btn sm" id="caseClose">닫기</button></div>
+    ${img('현장 사진',`cases.${i}.image`,'가로·세로 어느 사진이든 괜찮습니다. 카드에는 정사각형으로 잘려 보입니다.')}
+    <div class="g3"><div class="f"><label>분류</label><select data-path="cases.${i}.cat">${cats.map(k=>`<option value="${esc(k.key)}" ${c.cat===k.key?'selected':''}>${esc(k.name)}</option>`).join('')}</select></div>${inp('지역 (카드 상단에 "○○ 시스템에어컨")',`cases.${i}.area`,{ph:'세종 조치원'})}${inp('시공 시기',`cases.${i}.date`,{ph:'2026-09'})}</div>
+    ${inp('제목',`cases.${i}.title`,{ph:'조치원 자이 아파트 시스템에어컨'})}${inp('한 줄 설명',`cases.${i}.sub`,{ph:'LG 시스템에어컨 4대 설치'})}
+    <div class="g3">${inp('브랜드',`cases.${i}.brand`)}${inp('시공 규모',`cases.${i}.units`,{ph:'4대'})}${inp('블로그 글 주소 (있으면)',`cases.${i}.link`,{ph:'https://blog.naver.com/...'})}</div>
+    <div class="row" style="display:flex;gap:6px;justify-content:flex-end"><button type="button" class="x" data-del="cases|${i}">이 사례 삭제</button><button type="button" class="btn sm primary" id="caseDone">목록에 반영</button></div></div>`;
+  $('caseClose').onclick=$('caseDone').onclick=()=>{ editingCase=null; render(); };
+  $('caseEditor').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---------- 입력 반영 ---------- */
+$('panel').addEventListener('input', e=>{ const el=e.target; if(!el.dataset.path) return; if(el.readOnly) return; setPath(draft, el.dataset.path, el.value); markDirty();
+  if(/\.image$/.test(el.dataset.path)||el.dataset.path==='about.image'||el.dataset.path==='prices.image'||el.dataset.path==='support.image'||el.dataset.path==='contactSec.image'){ const th=$(el.id+'_th'); if(th) th.style.backgroundImage=`url('${el.value}')`; } });
+$('panel').addEventListener('change', e=>{ const el=e.target; if(el.tagName==='SELECT'&&el.dataset.path){ setPath(draft, el.dataset.path, el.value); markDirty(); }
+  if(el.dataset.imgpath && el.files && el.files[0]) uploadImage(el.files[0], el.dataset.imgpath); });
+$('panel').addEventListener('click', e=>{
+  const add=e.target.closest('[data-add]'); if(add){ const p=add.dataset.add; const arr=getPath(draft,p)||[]; const t={ 'hero.slides':{image:'',label:'',title:'',text:'',btn:'',link:'#contact'}, 'about.points':{title:'',text:''}, 'categories':{key:'new'+(arr.length+1),name:'새 분류',en:'',text:'',image:''}, 'prices.items':{name:'',price:'',desc:''}, 'contactSec.points':'', 'support.faq':{q:'',a:''} }[p]; arr.push(clone(t)); setPath(draft,p,arr); markDirty(); render(); return; }
+  const del=e.target.closest('[data-del]'); if(del){ const [p,i]=del.dataset.del.split('|'); if(!confirm('삭제할까요?')) return; getPath(draft,p).splice(+i,1); if(p==='cases') editingCase=null; markDirty(); render(); return; }
+  const mv=e.target.closest('[data-move]'); if(mv){ const [p,i,d]=mv.dataset.move.split('|'); const arr=getPath(draft,p); const a=+i, b=a+(+d); if(b<0||b>=arr.length) return; [arr[a],arr[b]]=[arr[b],arr[a]]; if(p==='cases'&&editingCase===a) editingCase=b; markDirty(); render(); return; }
+  const clr=e.target.closest('[data-imgclear]'); if(clr){ setPath(draft,clr.dataset.imgclear,''); markDirty(); render(); if(editingCase!=null&&tab==='cases') renderCaseEditor(); return; }
+  const row=e.target.closest('.caseRow'); if(row && !e.target.closest('button')){ editingCase=+row.dataset.edit; render(); }
+});
+
+/* ---------- 사진 올리기: 브라우저에서 축소 → 서버 업로드 또는 파일 안에 포함 ---------- */
+function shrink(file, max){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file); const im=new Image(); im.onload=()=>{ let w=im.width,h=im.height; const s=Math.min(1,max/Math.max(w,h)); w=Math.round(w*s); h=Math.round(h*s);
+  const cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); URL.revokeObjectURL(u); cv.toBlob(b=>b?res(b):rej(new Error('변환 실패')),'image/jpeg',.84); }; im.onerror=()=>rej(new Error('이미지를 읽을 수 없습니다.')); im.src=u; }); }
+async function uploadImage(file, path){
+  toast('사진 처리 중…');
+  try{ const blob=await shrink(file, 1400);
+    if(mode==='server'){ const fd=new FormData(); fd.append('file', blob, 'photo.jpg'); const r=await api('upload', null, fd); if(!r.ok) throw new Error(r.message||r.error); setPath(draft,path,r.path); }
+    else { const url=await new Promise(res=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.readAsDataURL(blob); }); setPath(draft,path,url); }
+    markDirty(); render(); toast('사진을 넣었습니다. 저장을 눌러야 홈페이지에 반영됩니다.');
+  }catch(e){ toast('사진 올리기 실패: '+e.message, true); }
+}
+
+/* ---------- 저장 · 미리보기 · 내려받기 ---------- */
+$('actSave').addEventListener('click', async ()=>{
+  if(mode==='server'){ try{ const r=await api('save',{config:toConfig()}); if(r.ok){ dirty=false; $('saveState').textContent='저장됨 · '+new Date().toLocaleString('ko-KR'); toast('저장했습니다. 홈페이지를 새로고침하면 반영됩니다.'); } else toast('저장 실패: '+(r.message||r.error), true); }catch(e){ toast('저장 실패: '+e.message, true); } }
+  else { try{ localStorage.setItem('cb_cfg_draft', JSON.stringify(toConfig())); }catch(e){} dirty=false; $('saveState').textContent='이 브라우저에 저장됨. 홈페이지에 반영하려면 config.js 를 내려받아 배포하세요.'; toast('이 브라우저에 저장했습니다.'); }
+});
+$('actDownload').addEventListener('click', ()=>{ const txt='window.CB_CONFIG = '+JSON.stringify(toConfig(),null,1)+';\n'; const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'text/javascript'})); a.download='config.js'; a.click(); });
+$('actPreview').addEventListener('click', ()=>{ try{ localStorage.setItem('cb_preview_cfg', JSON.stringify(toConfig())); }catch(e){} window.open('index.html?preview=1','cb_preview'); });
+$('actReset').addEventListener('click', ()=>{ if(!confirm('모든 문구·시공사례를 처음 기본값으로 되돌립니다. 저장을 눌러야 적용됩니다. 계속할까요?')) return; draft=clone(DEFAULTS); editingCase=null; markDirty(); render(); });
+window.addEventListener('beforeunload', e=>{ if(dirty && mode==='server'){ e.preventDefault(); e.returnValue=''; } });
+
+init();
+})();
+</script>
+</body>
+</html>
